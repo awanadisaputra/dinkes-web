@@ -63,14 +63,14 @@
 
                 <!-- toggle -->
                 <div>
-                    <button data-modal-target="tambahUserModal" data-modal-toggle="tambahUserModal"
+                    <button data-modal-target="createModal" data-modal-toggle="createModal"
                         class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none"
                         type="button">
                         Tambah Menu
                     </button>
 
                     <!-- modal tambah menu -->
-                    <div id="tambahUserModal" tabindex="-1" aria-hidden="true"
+                    <div id="createModal" tabindex="-1" aria-hidden="true"
                         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                         <div class="relative p-4 w-full max-w-md max-h-full">
                             <!-- Modal content -->
@@ -83,7 +83,7 @@
                                     </h3>
                                     <button type="button"
                                         class="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
-                                        data-modal-hide="tambahUserModal">
+                                        data-modal-hide="createModal">
                                         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                             width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -125,7 +125,7 @@
                                             class="inline-flex items-center  text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
                                             Tambah menu
                                         </button>
-                                        <button data-modal-hide="tambahUserModal" type="button"
+                                        <button data-modal-hide="createModal" type="button"
                                             class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Batal</button>
                                     </div>
                                 </form>
@@ -178,8 +178,8 @@
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
                                     <!-- Tombol Edit -->
-                                    <button type="button" data-modal-target="editUserModal-{{ $menu->id }}"
-                                        data-modal-toggle="editUserModal-{{ $menu->id }}"
+                                    <button type="button" data-modal-target="editModal-{{ $menu->id }}"
+                                        data-modal-toggle="editModal-{{ $menu->id }}"
                                         class="font-medium text-fg-brand hover:underline">
                                         Edit
                                     </button>
@@ -193,7 +193,7 @@
                                 </div>
 
                                 <!-- Modal Edit -->
-                                <div id="editUserModal-{{ $menu->id }}" tabindex="-1" aria-hidden="true"
+                                <div id="editModal-{{ $menu->id }}" tabindex="-1" aria-hidden="true"
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                     <div class="relative p-4 w-full max-w-md max-h-full">
                                         <div
@@ -204,7 +204,7 @@
                                                 </h3>
                                                 <button type="button"
                                                     class="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
-                                                    data-modal-hide="editUserModal-{{ $menu->id }}">
+                                                    data-modal-hide="editModal-{{ $menu->id }}">
                                                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                                         width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                         <path stroke="currentColor" stroke-linecap="round"
@@ -251,7 +251,7 @@
                                                         class="inline-flex items-center text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
                                                         Update menu
                                                     </button>
-                                                    <button data-modal-hide="editUserModal-{{ $menu->id }}" type="button"
+                                                    <button data-modal-hide="editModal-{{ $menu->id }}" type="button"
                                                         class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
                                                         Batal
                                                     </button>

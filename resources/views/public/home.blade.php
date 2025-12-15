@@ -3,7 +3,8 @@
 @section('title', 'Beranda - Dinas Kesehatan Kota Kediri')
 
 @section('content')
-    <div class="h-screen">
-        <h1>Hello World</h1>
+    <div class="min-h-screen">
+        <x-jumbotron />
+        <x-slider :sliders="$sliders" />
     </div>
 @endsection

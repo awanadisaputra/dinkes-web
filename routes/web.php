@@ -2,13 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SubmenuController;
 
 // public route
-Route::get('/', function () {
-    return view('public.home');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 // auth route
 Route::get('/login', [AuthController::class, 'index'])->name('login');
@@ -29,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
 
         // submenu
         Route::resource('submenu', SubmenuController::class)->names('submenu');
+
+        // slider
+        Route::resource('slider', SliderController::class)->names('slider');
     });
 
     // upt route

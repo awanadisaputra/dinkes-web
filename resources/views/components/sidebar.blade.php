@@ -63,6 +63,18 @@
             </li>
 
             <li>
+                <a href="{{ route('admin.slider.index') }}"
+                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->routeIs('admin.slider') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                    <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm0 2h12v6l-3-3-4 4-2-2-3 3V5z" />
+                    </svg>
+                    <span class="ml-3">Slider</span>
+                </a>
+            </li>
+
+            <li>
                 <button type="button"
                     class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                     data-collapse-toggle="dropdown-pages">
