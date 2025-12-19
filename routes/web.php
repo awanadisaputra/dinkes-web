@@ -11,6 +11,7 @@ use App\Http\Controllers\SubmenuController;
 
 // public route
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/artikel/{article:slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('public.article.show');
 
 // auth route
 Route::get('/login', [AuthController::class, 'index'])->name('login');
@@ -45,6 +46,14 @@ Route::middleware(['auth'])->group(function () {
         // account settings
         Route::get('account', [ProfileController::class, 'editAccount'])->name('account.edit');
         Route::put('account', [ProfileController::class, 'updateAccount'])->name('account.update');
+
+        // article
+        Route::resource('article', App\Http\Controllers\ArticleController::class)->names('article');
+        Route::post('article/upload-image', [App\Http\Controllers\ArticleController::class, 'uploadImage'])->name('article.uploadImage');
+
+
+        // category
+        Route::resource('category', App\Http\Controllers\CategoryController::class)->names('category');
     });
 
     // upt route
