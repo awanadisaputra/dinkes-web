@@ -90,7 +90,7 @@
 
             <li>
                 <a href="{{ route('admin.article.index') }}"
-                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->routeIs('admin.article.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->routeIs('admin.article.index') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
                     <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                         fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
@@ -98,6 +98,25 @@
                             clip-rule="evenodd"></path>
                     </svg>
                     <span class="ml-3">Artikel</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('admin.article.submissions') }}"
+                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->routeIs('admin.article.submissions') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                    <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Persetujuan</span>
+                    @php
+                        $pendingCount = \App\Models\Article::where('status', 'pending')->count();
+                    @endphp
+                    @if ($pendingCount > 0)
+                        <span class="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-white bg-red-600 rounded-full">
+                            {{ $pendingCount }}
+                        </span>
+                    @endif
                 </a>
             </li>
 

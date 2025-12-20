@@ -11,6 +11,7 @@ use App\Http\Controllers\SubmenuController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\GuestArticleController;
 
 // public route
 Route::get('/', [HomeController::class, 'index']);
@@ -18,6 +19,13 @@ Route::get('/artikel/{article:slug}', [App\Http\Controllers\ArticleController::c
 Route::get('/berita/{news:slug}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/pengumuman/{announcement:slug}', [AnnouncementController::class, 'show'])->name('announcement.show');
 Route::get('/page/{page:slug}', [PageController::class, 'show'])->name('page.show');
+
+// guest article submission
+Route::middleware(['throttle:3,60'])->group(function () {
+    Route::get('/ajukan-artikel', [GuestArticleController::class, 'create'])->name('public.article.create');
+    Route::post('/ajukan-artikel', [GuestArticleController::class, 'store'])->name('public.article.store');
+    Route::post('/guest/article/upload-image', [GuestArticleController::class, 'uploadImage'])->name('public.article.uploadImage');
+});
 
 // auth route
 Route::get('/login', [AuthController::class, 'index'])->name('login');
@@ -54,6 +62,9 @@ Route::middleware(['auth'])->group(function () {
         Route::put('account', [ProfileController::class, 'updateAccount'])->name('account.update');
 
         // article
+        Route::get('article/submissions', [App\Http\Controllers\ArticleController::class, 'submissions'])->name('article.submissions');
+        Route::post('article/{article}/approve', [App\Http\Controllers\ArticleController::class, 'approve'])->name('article.approve');
+        Route::post('article/{article}/reject', [App\Http\Controllers\ArticleController::class, 'reject'])->name('article.reject');
         Route::resource('article', App\Http\Controllers\ArticleController::class)->names('article');
         Route::post('article/upload-image', [App\Http\Controllers\ArticleController::class, 'uploadImage'])->name('article.uploadImage');
 

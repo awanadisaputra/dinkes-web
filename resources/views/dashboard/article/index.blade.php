@@ -27,6 +27,8 @@
                         <th scope="col" class="px-6 py-3">No</th>
                         <th scope="col" class="px-6 py-3">Judul</th>
                         <th scope="col" class="px-6 py-3">Kategori</th>
+                        <th scope="col" class="px-6 py-3">Status</th>
+                        <th scope="col" class="px-6 py-3">Pengirim</th>
                         <th scope="col" class="px-6 py-3">Tanggal Dibuat</th>
                         <th scope="col" class="px-6 py-3">Aksi</th>
                     </tr>
@@ -51,7 +53,25 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4">
-                                {{ $article->created_at->format('d M Y H:i') }}
+                                @if($article->status === 'published')
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Publish</span>
+                                @elseif($article->status === 'pending')
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">Pending</span>
+                                @else
+                                    <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Ditolak</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4">
+                                @if($article->is_guest)
+                                    <div class="text-xs font-medium text-gray-900">{{ $article->guest_name }}</div>
+                                    <div class="text-[10px] text-gray-500">Masyarakat</div>
+                                @else
+                                    <div class="text-xs font-medium text-gray-900">{{ $article->user->name ?? 'Admin' }}</div>
+                                    <div class="text-[10px] text-gray-500">Staff/UPT</div>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $article->created_at->format('d M Y') }}
                             </td>
                             <td class="px-6 py-4 flex gap-2">
                                 <a href="{{ route('admin.article.edit', $article) }}"
@@ -66,7 +86,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-4 text-center">Belum ada artikel.</td>
+                            <td colspan="7" class="px-6 py-4 text-center">Belum ada artikel.</td>
                         </tr>
                     @endforelse
                 </tbody>

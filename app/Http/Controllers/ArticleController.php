@@ -25,6 +25,9 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
+        if ($article->status !== 'published' && !Auth::check()) {
+            abort(404);
+        }
         return view('public.article.show', compact('article'));
     }
 
@@ -68,6 +71,8 @@ class ArticleController extends Controller
             'content' => $request->content,
             'category_id' => $request->category_id,
             'user_id' => Auth::id(),
+            'status' => 'published',
+            'is_guest' => false,
         ]);
 
         return redirect()->route('admin.article.index')->with('success', 'Artikel berhasil dibuat');
@@ -146,7 +151,25 @@ class ArticleController extends Controller
             }
         }
         $article->delete();
-        return redirect()->route('admin.article.index')->with('success', 'Artikel berhasil dihapus');
+        return redirect()->back()->with('success', 'Artikel berhasil dihapus');
+    }
+
+    public function submissions()
+    {
+        $articles = Article::with(['category'])->where('status', 'pending')->latest()->get();
+        return view('dashboard.article.submissions', compact('articles'));
+    }
+
+    public function approve(Article $article)
+    {
+        $article->update(['status' => 'published']);
+        return redirect()->back()->with('success', 'Artikel berhasil diterbitkan');
+    }
+
+    public function reject(Article $article)
+    {
+        $article->update(['status' => 'rejected']);
+        return redirect()->back()->with('success', 'Artikel telah ditolak');
     }
 
     public function uploadImage(Request $request)

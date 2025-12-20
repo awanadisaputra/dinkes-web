@@ -16,7 +16,16 @@ class Article extends Model
         'content',
         'category_id',
         'user_id',
+        'status',
+        'is_guest',
+        'guest_name',
+        'guest_email',
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'published');
+    }
 
     public function user()
     {
