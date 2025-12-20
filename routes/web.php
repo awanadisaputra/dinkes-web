@@ -22,10 +22,11 @@ Route::get('/pengumuman/{announcement:slug}', [AnnouncementController::class, 's
 Route::get('/page/{page:slug}', [PageController::class, 'show'])->name('page.show');
 
 // guest article submission
-Route::middleware(['throttle:3,60'])->group(function () {
+Route::middleware(['throttle:6,60'])->group(function () {
     Route::get('/ajukan-artikel', [GuestArticleController::class, 'create'])->name('public.article.create');
     Route::post('/ajukan-artikel', [GuestArticleController::class, 'store'])->name('public.article.store');
     Route::post('/guest/article/upload-image', [GuestArticleController::class, 'uploadImage'])->name('public.article.uploadImage');
+    Route::post('/guest/article/delete-image', [GuestArticleController::class, 'deleteImage'])->name('public.article.deleteImage');
 });
 
 // auth route
@@ -66,19 +67,23 @@ Route::middleware(['auth'])->group(function () {
         Route::post('article/{article}/reject', [App\Http\Controllers\ArticleController::class, 'reject'])->name('article.reject');
         Route::resource('article', App\Http\Controllers\ArticleController::class)->names('article');
         Route::post('article/upload-image', [App\Http\Controllers\ArticleController::class, 'uploadImage'])->name('article.uploadImage');
+        Route::post('article/delete-image', [App\Http\Controllers\ArticleController::class, 'deleteImage'])->name('article.deleteImage');
 
         // news
         Route::resource('news', NewsController::class)->except(['show'])->names('news');
         Route::post('news/upload-image', [NewsController::class, 'uploadImage'])->name('news.uploadImage');
+        Route::post('news/delete-image', [NewsController::class, 'deleteImage'])->name('news.deleteImage');
         Route::post('news/upload-video', [NewsController::class, 'uploadVideo'])->name('news.uploadVideo');
 
         // announcement
         Route::resource('announcement', AnnouncementController::class)->except(['show'])->names('announcement');
         Route::post('announcement/upload-image', [AnnouncementController::class, 'uploadImage'])->name('announcement.uploadImage');
+        Route::post('announcement/delete-image', [AnnouncementController::class, 'deleteImage'])->name('announcement.deleteImage');
 
         // page
         Route::resource('page', PageController::class)->except(['show'])->names('page');
         Route::post('page/upload-image', [PageController::class, 'uploadImage'])->name('page.uploadImage');
+        Route::post('page/delete-image', [PageController::class, 'deleteImage'])->name('page.deleteImage');
 
         // category
         Route::resource('category', App\Http\Controllers\CategoryController::class)->names('category');

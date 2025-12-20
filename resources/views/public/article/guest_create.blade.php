@@ -127,6 +127,50 @@
         // Set initial content if exists
         quill.root.innerHTML = `{!! old('content') !!}`;
 
+
+        let sessionUploadedImages = [];
+
+        quill.on('text-change', function(delta, oldDelta, source) {
+            if (source === 'user') {
+                const currContents = quill.getContents();
+                const oldImages = getImagesFromDelta(oldDelta);
+                const currImages = getImagesFromDelta(currContents);
+                
+                const deletedImages = oldImages.filter(img => !currImages.includes(img));
+                
+                deletedImages.forEach(imgUrl => {
+                    if (sessionUploadedImages.includes(imgUrl)) {
+                        deleteFromServer(imgUrl);
+                    }
+                });
+            }
+        });
+
+        function getImagesFromDelta(delta) {
+            return delta.ops
+                .filter(op => op.insert && op.insert.image)
+                .map(op => op.insert.image);
+        }
+
+        function deleteFromServer(url) {
+            const fd = new FormData();
+            fd.append('url', url);
+            fd.append('_token', '{{ csrf_token() }}');
+
+            fetch('{{ route('public.article.deleteImage') }}', {
+                method: 'POST',
+                body: fd
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    sessionUploadedImages = sessionUploadedImages.filter(img => img !== url);
+                    console.log('Image deleted from server:', url);
+                }
+            })
+            .catch(error => console.error('Error deleting image:', error));
+        }
+
         // Custom image upload handler
         quill.getModule('toolbar').addHandler('image', () => {
             const input = document.createElement('input');
@@ -147,6 +191,7 @@
                     xhr.onload = () => {
                         if (xhr.status === 200) {
                             const url = JSON.parse(xhr.responseText).url;
+                            sessionUploadedImages.push(url);
                             const range = quill.getSelection();
                             quill.insertEmbed(range.index, 'image', url);
                         }

@@ -159,6 +159,22 @@ class NewsController extends Controller
         return response()->json(['error' => 'No image uploaded'], 400);
     }
 
+    public function deleteImage(Request $request)
+    {
+        $url = $request->url;
+        if (!$url) {
+            return response()->json(['error' => 'No URL provided'], 400);
+        }
+
+        $path = str_replace('/storage/', '', $url);
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['error' => 'File not found'], 404);
+    }
+
 
     public function uploadVideo(Request $request)
     {

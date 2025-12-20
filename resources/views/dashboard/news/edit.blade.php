@@ -78,6 +78,50 @@
             }
         });
 
+
+        let sessionUploadedImages = [];
+
+        quill.on('text-change', function(delta, oldDelta, source) {
+            if (source === 'user') {
+                const currContents = quill.getContents();
+                const oldImages = getImagesFromDelta(oldDelta);
+                const currImages = getImagesFromDelta(currContents);
+                
+                const deletedImages = oldImages.filter(img => !currImages.includes(img));
+                
+                deletedImages.forEach(imgUrl => {
+                    if (sessionUploadedImages.includes(imgUrl)) {
+                        deleteFromServer(imgUrl);
+                    }
+                });
+            }
+        });
+
+        function getImagesFromDelta(delta) {
+            return delta.ops
+                .filter(op => op.insert && op.insert.image)
+                .map(op => op.insert.image);
+        }
+
+        function deleteFromServer(url) {
+            const fd = new FormData();
+            fd.append('url', url);
+            fd.append('_token', '{{ csrf_token() }}');
+
+            fetch('{{ route('admin.news.deleteImage') }}', {
+                method: 'POST',
+                body: fd
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    sessionUploadedImages = sessionUploadedImages.filter(img => img !== url);
+                    console.log('Image deleted from server:', url);
+                }
+            })
+            .catch(error => console.error('Error deleting image:', error));
+        }
+
         function imageHandler() {
             var input = document.createElement('input');
             input.setAttribute('type', 'file');
@@ -95,7 +139,6 @@
         }
 
 
-
         function saveToServer(file) {
             const fd = new FormData();
             fd.append('image', file);
@@ -107,6 +150,7 @@
             xhr.onload = () => {
                 if (xhr.status === 200) {
                     const url = JSON.parse(xhr.responseText).url;
+                    sessionUploadedImages.push(url);
                     insertToEditor(url);
                 } else {
                     console.error('Upload failed');
