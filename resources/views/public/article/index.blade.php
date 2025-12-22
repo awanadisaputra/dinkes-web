@@ -120,11 +120,11 @@
                                 <div class="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs uppercase">
-                                            {{ substr($article->user->name ?? 'A', 0, 1) }}
+                                            {{ substr($article->user->name ?? $article->guest_name ?? 'A', 0, 1) }}
                                         </div>
-                                        <a href="{{ route('public.article.index', ['author' => $article->user->username] + request()->except('author', 'page')) }}" 
+                                        <a href="{{ $article->user ? route('public.article.index', ['author' => $article->user->username] + request()->except('author', 'page')) : '#' }}" 
                                            class="text-xs font-semibold text-gray-700 hover:text-blue-600 transition-colors">
-                                            {{ $article->user->name ?? 'Administrator' }}
+                                            {{ $article->user->name ?? $article->guest_name ?? 'Administrator' }}
                                         </a>
                                     </div>
                                     <a href="{{ route('public.article.show', $article) }}" class="text-blue-600 hover:text-blue-800 transition-colors">
