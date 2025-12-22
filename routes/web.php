@@ -32,7 +32,7 @@ Route::get('/pengumuman/{announcement:slug}', [AnnouncementController::class, 's
 Route::get('/page/{page:slug}', [PageController::class, 'show'])->name('page.show');
 
 // guest article submission
-Route::middleware(['throttle:6,60'])->group(function () {
+Route::middleware(['throttle:10,60'])->group(function () {
     Route::get('/ajukan-artikel', [GuestArticleController::class, 'create'])->name('public.article.create');
     Route::post('/ajukan-artikel', [GuestArticleController::class, 'store'])->name('public.article.store');
     Route::post('/guest/article/upload-image', [GuestArticleController::class, 'uploadImage'])->name('public.article.uploadImage');

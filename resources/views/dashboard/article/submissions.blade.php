@@ -49,22 +49,21 @@
                                 {{ $item->created_at->format('d M Y, H:i') }}
                             </td>
                             <td class="px-6 py-4">
-                                <div class="flex flex-col gap-2">
+                                <div class="flex items-center gap-2">
                                     <form action="{{ route('admin.article.approve', $item) }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1.5 focus:outline-none">Terima</button>
+                                        <button type="submit"
+                                            class="inline-flex items-center justify-center w-20 h-8 text-white bg-green-600 hover:bg-green-700 rounded-md text-xs font-medium focus:ring-2 focus:ring-green-300">
+                                            Terima
+                                        </button>
                                     </form>
-                                    <div class="flex gap-1">
-                                        <form action="{{ route('admin.article.reject', $item) }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 focus:outline-none flex-1">Tolak</button>
-                                        </form>
-                                        <form action="{{ route('admin.article.destroy', $item) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengajuan ini secara permanen?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 focus:outline-none">Hapus</button>
-                                        </form>
-                                    </div>
+                                    <form action="{{ route('admin.article.reject', $item) }}" method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="inline-flex items-center justify-center w-20 h-8 text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-xs font-medium focus:ring-2 focus:ring-yellow-300">
+                                            Tolak
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
