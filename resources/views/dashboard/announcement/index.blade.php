@@ -53,6 +53,8 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 flex gap-2">
+                                <a href="{{ route('announcement.show', $item->slug) }}" 
+                                    class="font-medium text-green-600 hover:underline">Lihat</a>
                                 <a href="{{ route('admin.announcement.edit', $item) }}"
                                     class="font-medium text-blue-600 hover:underline">Edit</a>
                                 <form action="{{ route('admin.announcement.destroy', $item) }}" method="POST"

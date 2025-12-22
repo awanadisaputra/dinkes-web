@@ -6,7 +6,7 @@
 @section('content')
     <div class="bg-white rounded-lg shadow-md p-6">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold">Artikel & Berita</h2>
+            <h2 class="text-xl font-semibold">Artikel</h2>
             <a href="{{ route('admin.article.create') }}"
                 class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Tambah Artikel
@@ -74,6 +74,8 @@
                                 {{ $article->created_at->format('d M Y') }}
                             </td>
                             <td class="px-6 py-4 flex gap-2">
+                                <a href="{{ route('public.article.show', $article->slug) }}" 
+                                    class="font-medium text-green-600 hover:underline">Lihat</a>
                                 <a href="{{ route('admin.article.edit', $article) }}"
                                     class="font-medium text-blue-600 hover:underline">Edit</a>
                                 <form action="{{ route('admin.article.destroy', $article) }}" method="POST"

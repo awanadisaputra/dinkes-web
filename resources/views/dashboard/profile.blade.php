@@ -8,30 +8,35 @@
 
     <div class="w-full max-w-lg bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6">
 
-        {{-- TOAST --}}
-        @if(session('success'))
-            <div id="toast-success"
-                class="fixed bottom-5 right-5 z-50 flex items-center w-full max-w-sm p-4 bg-green-100 border border-green-400 rounded-lg shadow">
-                <div class="text-sm font-normal">
-                    {{ session('success') }}
-                </div>
-            </div>
-        @endif
-
+        {{-- Header --}}
         <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
             <h3 class="text-lg font-medium text-heading">
                 Update Profil
             </h3>
         </div>
 
+        {{-- Notifikasi Sukses --}}
+        @if(session('success'))
+            <div id="toast-success"
+                class="mt-4 w-full p-4 bg-green-100 border border-green-400 rounded-lg shadow">
+                <div class="text-sm font-normal text-green-800">
+                    {{ session('success') }}
+                </div>
+            </div>
+        @endif
+
+        {{-- Form --}}
         <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
             <div class="py-4 md:py-6 flex flex-col gap-4">
+
                 {{-- Nama --}}
                 <div>
-                    <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Nama Lengkap</label>
+                    <label for="name" class="block mb-2.5 text-sm font-medium text-heading">
+                        Nama Lengkap
+                    </label>
                     <input type="text" name="name" id="name"
                         value="{{ old('name', auth()->user()->name) }}"
                         class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
@@ -41,9 +46,11 @@
                     @enderror
                 </div>
 
-                {{-- User --}}
+                {{-- Username --}}
                 <div>
-                    <label for="username" class="block mb-2.5 text-sm font-medium text-heading">Username</label>
+                    <label for="username" class="block mb-2.5 text-sm font-medium text-heading">
+                        Username
+                    </label>
                     <input type="text" name="username" id="username"
                         value="{{ old('username', auth()->user()->username) }}"
                         class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
@@ -55,7 +62,9 @@
 
                 {{-- Alamat --}}
                 <div>
-                    <label for="alamat" class="block mb-2.5 text-sm font-medium text-heading">Alamat</label>
+                    <label for="alamat" class="block mb-2.5 text-sm font-medium text-heading">
+                        Alamat
+                    </label>
                     <textarea name="alamat" id="alamat" rows="3"
                         class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body">{{ old('alamat', auth()->user()->alamat) }}</textarea>
                     @error('alamat')
@@ -65,7 +74,9 @@
 
                 {{-- No Telp --}}
                 <div>
-                    <label for="no_telp" class="block mb-2.5 text-sm font-medium text-heading">No. Telepon</label>
+                    <label for="no_telp" class="block mb-2.5 text-sm font-medium text-heading">
+                        No. Telepon
+                    </label>
                     <input type="text" name="no_telp" id="no_telp"
                         value="{{ old('no_telp', auth()->user()->no_telp) }}"
                         class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body">
@@ -76,12 +87,16 @@
 
                 {{-- Foto Profil --}}
                 <div>
-                    <label class="block mb-2.5 text-sm font-medium text-heading" for="avatar">Foto Profil</label>
-                    <input class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body" id="avatar" name="avatar" type="file">
+                    <label for="avatar" class="block mb-2.5 text-sm font-medium text-heading">
+                        Foto Profil
+                    </label>
+                    <input type="file" name="avatar" id="avatar"
+                        class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body">
                     @error('avatar')
                         <span class="text-sm text-red-600">{{ $message }}</span>
                     @enderror
                 </div>
+
             </div>
 
             {{-- Submit --}}
@@ -95,7 +110,7 @@
     </div>
 </div>
 
-{{-- AUTO HIDE TOAST --}}
+{{-- Auto hide notification --}}
 <script>
     setTimeout(() => {
         document.getElementById('toast-success')?.remove();

@@ -4,22 +4,24 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
-use App\Http\Controllers\SliderController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SliderController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubmenuController;
-use App\Http\Controllers\NewsController;
-use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\GuestArticleController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\GuestArticleController;
 
 // public route
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/artikel', [App\Http\Controllers\ArticleController::class, 'publicIndex'])->name('public.article.index');
-Route::get('/artikel/kategori/{category:slug}', [App\Http\Controllers\ArticleController::class, 'publicIndex'])->name('public.article.category');
-Route::get('/artikel/author/{author}', [App\Http\Controllers\ArticleController::class, 'publicIndex'])->name('public.article.author');
-Route::get('/artikel/{article:slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('public.article.show');
+Route::get('/artikel', [ArticleController::class, 'publicIndex'])->name('public.article.index');
+Route::get('/artikel/kategori/{category:slug}', [ArticleController::class, 'publicIndex'])->name('public.article.category');
+Route::get('/artikel/author/{author}', [ArticleController::class, 'publicIndex'])->name('public.article.author');
+Route::get('/artikel/{article:slug}', [ArticleController::class, 'show'])->name('public.article.show');
 
 Route::get('/berita', [NewsController::class, 'publicIndex'])->name('public.news.index');
 Route::get('/berita/{news:slug}', [NewsController::class, 'show'])->name('news.show');
@@ -47,15 +49,23 @@ Route::middleware(['auth'])->group(function () {
     // shared routes for admin and upt
     Route::middleware(['role:admin,upt'])->prefix('dashboard')->group(function () {
         // article
-        Route::resource('article', App\Http\Controllers\ArticleController::class)->names('admin.article');
-        Route::post('article/upload-image', [App\Http\Controllers\ArticleController::class, 'uploadImage'])->name('admin.article.uploadImage');
-        Route::post('article/delete-image', [App\Http\Controllers\ArticleController::class, 'deleteImage'])->name('admin.article.deleteImage');
+        Route::resource('article', ArticleController::class)->names('admin.article');
+        Route::post('article/upload-image', [ArticleController::class, 'uploadImage'])->name('admin.article.uploadImage');
+        Route::post('article/delete-image', [ArticleController::class, 'deleteImage'])->name('admin.article.deleteImage');
 
         // news
         Route::resource('news', NewsController::class)->except(['show'])->names('admin.news');
         Route::post('news/upload-image', [NewsController::class, 'uploadImage'])->name('admin.news.uploadImage');
         Route::post('news/delete-image', [NewsController::class, 'deleteImage'])->name('admin.news.deleteImage');
         Route::post('news/upload-video', [NewsController::class, 'uploadVideo'])->name('admin.news.uploadVideo');
+
+        // profile
+        Route::get('profile', [ProfileController::class, 'edit'])->name('admin.profile.edit');
+        Route::put('profile', [ProfileController::class, 'update'])->name('admin.profile.update');
+
+        // account settings
+        Route::get('account', [ProfileController::class, 'editAccount'])->name('admin.account.edit');
+        Route::put('account', [ProfileController::class, 'updateAccount'])->name('admin.account.update');
 
         // announcement
         Route::resource('announcement', AnnouncementController::class)->except(['show'])->names('admin.announcement');
@@ -80,18 +90,10 @@ Route::middleware(['auth'])->group(function () {
         // user
         Route::resource('user', UserController::class)->names('user');
 
-        // profile
-        Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
-
-        // account settings
-        Route::get('account', [ProfileController::class, 'editAccount'])->name('account.edit');
-        Route::put('account', [ProfileController::class, 'updateAccount'])->name('account.update');
-
         // article submissions
-        Route::get('article/submissions', [App\Http\Controllers\ArticleController::class, 'submissions'])->name('article.submissions');
-        Route::post('article/{article}/approve', [App\Http\Controllers\ArticleController::class, 'approve'])->name('article.approve');
-        Route::post('article/{article}/reject', [App\Http\Controllers\ArticleController::class, 'reject'])->name('article.reject');
+        Route::get('article/submissions', [ArticleController::class, 'submissions'])->name('article.submissions');
+        Route::post('article/{article}/approve', [ArticleController::class, 'approve'])->name('article.approve');
+        Route::post('article/{article}/reject', [ArticleController::class, 'reject'])->name('article.reject');
 
         // page
         Route::resource('page', PageController::class)->except(['show'])->names('page');
@@ -99,7 +101,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('page/delete-image', [PageController::class, 'deleteImage'])->name('page.deleteImage');
 
         // category
-        Route::resource('category', App\Http\Controllers\CategoryController::class)->names('category');
+        Route::resource('category', CategoryController::class)->names('category');
     });
 
     // upt only route
