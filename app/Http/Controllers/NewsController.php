@@ -25,7 +25,7 @@ class NewsController extends Controller
 
     public function publicIndex(Request $request)
     {
-        $query = News::query()->with(['user']);
+        $query = News::query()->published()->with(['user']);
 
         // Search
         if ($request->has('search')) {
@@ -185,6 +185,19 @@ class NewsController extends Controller
         }
         $news->delete();
         return redirect()->route('admin.news.index')->with('success', 'Berita berhasil dihapus');
+    }
+
+    public function toggleStatus(News $news)
+    {
+        if ($news->status === 'published') {
+            $news->update(['status' => 'draft']);
+            $message = 'Berita berhasil di-unpublish (Draft)';
+        } else {
+            $news->update(['status' => 'published']);
+            $message = 'Berita berhasil dipublish';
+        }
+
+        return redirect()->back()->with('success', $message);
     }
 
     public function uploadImage(Request $request)

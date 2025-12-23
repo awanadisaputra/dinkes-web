@@ -35,6 +35,7 @@
                             <td class="px-6 py-4">
                                 <div class="font-medium text-gray-900">{{ $item->guest_name }}</div>
                                 <div class="text-xs text-gray-500">{{ $item->guest_email }}</div>
+                                <div class="text-xs text-green-600">{{ $item->guest_whatsapp }}</div>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="font-medium text-gray-900">{{ $item->title }}</div>

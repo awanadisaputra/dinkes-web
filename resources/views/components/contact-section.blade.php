@@ -42,22 +42,47 @@
                 <h2 class="text-3xl font-bold text-heading tracking-tight mb-2">Kritik & Saran</h2>
                 <p class="text-body-subtle mb-8">Masukan Anda sangat berharga untuk peningkatan pelayanan kami.</p>
 
-                <form class="space-y-5">
+                <form action="{{ route('feedback.store') }}" method="POST" class="space-y-5">
+                    @csrf
+                    <!-- Honeypot Field -->
+                    <input type="text" name="website" style="display:none;">
+
+                    @if(session('success'))
+                        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" role="alert">
+                            <span class="font-medium">Berhasil!</span> {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+                            <ul class="list-disc pl-5">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <div>
+                        <label for="name" class="block mb-2 text-sm font-medium text-heading">Nama Lengkap</label>
+                        <input type="text" id="name" name="name" required class="bg-neutral-50 border border-default text-heading text-sm rounded-xl focus:ring-brand focus:border-brand block w-full p-3 transition-colors" placeholder="Masukkan nama anda">
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label for="name" class="block mb-2 text-sm font-medium text-heading">Nama Lengkap</label>
-                            <input type="text" id="name" class="bg-neutral-50 border border-default text-heading text-sm rounded-xl focus:ring-brand focus:border-brand block w-full p-3 transition-colors" placeholder="Masukkan nama anda">
+                            <label for="email" class="block mb-2 text-sm font-medium text-heading">Email</label>
+                            <input type="email" id="email" name="email" required class="bg-neutral-50 border border-default text-heading text-sm rounded-xl focus:ring-brand focus:border-brand block w-full p-3 transition-colors" placeholder="nama@email.com">
                         </div>
                         <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-heading">Email</label>
-                            <input type="email" id="email" class="bg-neutral-50 border border-default text-heading text-sm rounded-xl focus:ring-brand focus:border-brand block w-full p-3 transition-colors" placeholder="nama@email.com">
+                            <label for="whatsapp" class="block mb-2 text-sm font-medium text-heading">No. WhatsApp</label>
+                            <input type="text" id="whatsapp" name="whatsapp" class="bg-neutral-50 border border-default text-heading text-sm rounded-xl focus:ring-brand focus:border-brand block w-full p-3 transition-colors" placeholder="0812xxxx">
                         </div>
                     </div>
 
                     <div>
                         <label for="subject" class="block mb-2 text-sm font-medium text-heading">Subjek</label>
-                        <select id="subject" class="bg-neutral-50 border border-default text-heading text-sm rounded-xl focus:ring-brand focus:border-brand block w-full p-3 transition-colors">
-                            <option selected>Pilih kategori masukan</option>
+                        <select id="subject" name="subject" required class="bg-neutral-50 border border-default text-heading text-sm rounded-xl focus:ring-brand focus:border-brand block w-full p-3 transition-colors">
+                            <option value="" selected disabled>Pilih kategori masukan</option>
                             <option value="layanan">Pelayanan</option>
                             <option value="fasilitas">Fasilitas</option>
                             <option value="informasi">Informasi/Website</option>
@@ -67,10 +92,10 @@
                     
                     <div>
                         <label for="message" class="block mb-2 text-sm font-medium text-heading">Pesan</label>
-                        <textarea id="message" rows="4" class="bg-neutral-50 border border-default text-heading text-sm rounded-xl focus:ring-brand focus:border-brand block w-full p-3 transition-colors resize-none" placeholder="Tuliskan kritik dan saran anda secara detail..."></textarea>
+                        <textarea id="message" name="message" required rows="4" class="bg-neutral-50 border border-default text-heading text-sm rounded-xl focus:ring-brand focus:border-brand block w-full p-3 transition-colors resize-none" placeholder="Tuliskan kritik dan saran anda secara detail..."></textarea>
                     </div>
 
-                    <button type="button" class="w-full text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand/20 font-bold rounded-xl text-sm px-5 py-3.5 text-center transition-all duration-300 shadow-md shadow-brand/20 hover:shadow-lg hover:shadow-brand/30 transform hover:-translate-y-0.5">
+                    <button type="submit" class="w-full text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand/20 font-bold rounded-xl text-sm px-5 py-3.5 text-center transition-all duration-300 shadow-md shadow-brand/20 hover:shadow-lg hover:shadow-brand/30 transform hover:-translate-y-0.5">
                         Kirim Masukan
                     </button>
                 </form>

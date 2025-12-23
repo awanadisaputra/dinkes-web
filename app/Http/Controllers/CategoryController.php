@@ -14,16 +14,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::latest()->get();
-        return view('dashboard.category.index', compact('categories'));
+        return view('dashboard.category', compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('dashboard.category.create');
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,13 +37,6 @@ class CategoryController extends Controller
         return redirect()->route('admin.category.index')->with('success', 'Kategori berhasil dibuat');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
-    {
-        return view('dashboard.category.edit', compact('category'));
-    }
 
     /**
      * Update the specified resource in storage.

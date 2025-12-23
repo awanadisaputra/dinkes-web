@@ -29,6 +29,7 @@ class GuestArticleController extends Controller
             'category_id' => 'required|exists:categories,id',
             'guest_name' => 'required|string|max:255',
             'guest_email' => 'required|email|max:255',
+            'guest_whatsapp' => 'required|string|max:20',
         ]);
 
         $slug = Str::slug($request->title);
@@ -52,6 +53,7 @@ class GuestArticleController extends Controller
             'is_guest' => true,
             'guest_name' => $request->guest_name,
             'guest_email' => $request->guest_email,
+            'guest_whatsapp' => $request->guest_whatsapp,
             'user_id' => null,
         ]);
 

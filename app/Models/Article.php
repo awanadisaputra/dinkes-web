@@ -20,6 +20,7 @@ class Article extends Model
         'is_guest',
         'guest_name',
         'guest_email',
+        'guest_whatsapp',
         'views',
     ];
 

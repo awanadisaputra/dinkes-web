@@ -31,9 +31,15 @@ Route::get('/pengumuman/{announcement:slug}', [AnnouncementController::class, 's
 
 Route::get('/page/{page:slug}', [PageController::class, 'show'])->name('page.show');
 
+// feedback
+Route::post('/feedback', [\App\Http\Controllers\FeedbackController::class, 'store'])
+    ->middleware('throttle:5,60')
+    ->name('feedback.store');
+
 // guest article submission
-Route::middleware(['throttle:10,60'])->group(function () {
-    Route::get('/ajukan-artikel', [GuestArticleController::class, 'create'])->name('public.article.create');
+Route::get('/ajukan-artikel', [GuestArticleController::class, 'create'])->name('public.article.create');
+
+Route::middleware(['throttle:5,60'])->group(function () {
     Route::post('/ajukan-artikel', [GuestArticleController::class, 'store'])->name('public.article.store');
     Route::post('/guest/article/upload-image', [GuestArticleController::class, 'uploadImage'])->name('public.article.uploadImage');
     Route::post('/guest/article/delete-image', [GuestArticleController::class, 'deleteImage'])->name('public.article.deleteImage');
@@ -50,11 +56,13 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:admin,upt'])->prefix('dashboard')->group(function () {
         // article
         Route::resource('article', ArticleController::class)->names('admin.article');
+        Route::post('article/{article}/toggle-status', [ArticleController::class, 'toggleStatus'])->name('admin.article.toggleStatus');
         Route::post('article/upload-image', [ArticleController::class, 'uploadImage'])->name('admin.article.uploadImage');
         Route::post('article/delete-image', [ArticleController::class, 'deleteImage'])->name('admin.article.deleteImage');
 
         // news
         Route::resource('news', NewsController::class)->except(['show'])->names('admin.news');
+        Route::post('news/{news}/toggle-status', [NewsController::class, 'toggleStatus'])->name('admin.news.toggleStatus');
         Route::post('news/upload-image', [NewsController::class, 'uploadImage'])->name('admin.news.uploadImage');
         Route::post('news/delete-image', [NewsController::class, 'deleteImage'])->name('admin.news.deleteImage');
         Route::post('news/upload-video', [NewsController::class, 'uploadVideo'])->name('admin.news.uploadVideo');
@@ -102,6 +110,9 @@ Route::middleware(['auth'])->group(function () {
 
         // category
         Route::resource('category', CategoryController::class)->names('category');
+
+        // feedback
+        Route::resource('feedback', \App\Http\Controllers\FeedbackController::class)->only(['index', 'show', 'destroy'])->names('feedback');
     });
 
     // upt only route

@@ -232,6 +232,21 @@ class ArticleController extends Controller
         return redirect()->back()->with('success', 'Artikel telah ditolak');
     }
 
+    public function toggleStatus(Article $article)
+    {
+        if ($article->status === 'published') {
+            $article->update(['status' => 'draft']);
+            $message = 'Artikel berhasil di-unpublish (Draft)';
+        } elseif ($article->status === 'draft') {
+            $article->update(['status' => 'published']);
+            $message = 'Artikel berhasil dipublish';
+        } else {
+             return redirect()->back()->with('error', 'Status artikel tidak dapat diubah (Pending/Rejected)');
+        }
+
+        return redirect()->back()->with('success', $message);
+    }
+
     public function uploadImage(Request $request)
     {
         if ($request->hasFile('image')) {

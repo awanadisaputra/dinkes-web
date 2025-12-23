@@ -15,8 +15,14 @@ class News extends Model
         'thumbnail',
         'content',
         'user_id',
+        'status',
         'views',
     ];
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'published');
+    }
 
     public function visits()
     {

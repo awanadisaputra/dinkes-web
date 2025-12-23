@@ -26,6 +26,7 @@
                     <tr>
                         <th scope="col" class="px-6 py-3">No</th>
                         <th scope="col" class="px-6 py-3">Judul</th>
+                        <th scope="col" class="px-6 py-3">Status</th>
                         <th scope="col" class="px-6 py-3">Penulis</th>
                         <th scope="col" class="px-6 py-3">Tanggal Dibuat</th>
                         <th scope="col" class="px-6 py-3">Aksi</th>
@@ -46,6 +47,13 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4">
+                                @if($item->status === 'published')
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Publish</span>
+                                @else
+                                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">Draft</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4">
                                 {{ $item->user->name ?? 'Unknown' }}
                             </td>
                             <td class="px-6 py-4">
@@ -56,6 +64,8 @@
                                     class="font-medium text-green-600 hover:underline">Lihat</a>
                                 <a href="{{ route('admin.news.edit', $item) }}"
                                     class="font-medium text-blue-600 hover:underline">Edit</a>
+                                
+
                                 <form action="{{ route('admin.news.destroy', $item) }}" method="POST"
                                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus berita ini?');">
                                     @csrf

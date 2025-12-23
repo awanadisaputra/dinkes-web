@@ -104,6 +104,24 @@
                 </a>
             </li>
 
+            {{-- Kritik & Saran --}}
+            <li>
+                <a href="{{ route('admin.feedback.index') }}"
+                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->routeIs('admin.feedback.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                    <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                    </svg>
+                    <span class="ml-3 flex-1 whitespace-nowrap">Kritik & Saran</span>
+                    @if(isset($unreadFeedbackCount) && $unreadFeedbackCount > 0)
+                        <span class="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-white bg-red-600 rounded-full">
+                            {{ $unreadFeedbackCount }}
+                        </span>
+                    @endif
+                </a>
+            </li>
+
             {{-- Pengumuman --}}
             <li>
                 <a href="{{ route('admin.announcement.index') }}"

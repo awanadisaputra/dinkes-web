@@ -22,5 +22,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('components.navbar', MenuComposer::class);
+
+        View::composer('components.sidebar', function ($view) {
+            $unreadFeedbackCount = \App\Models\Feedback::where('is_read', false)->count();
+            $view->with('unreadFeedbackCount', $unreadFeedbackCount);
+        });
     }
 }

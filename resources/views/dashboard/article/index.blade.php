@@ -57,6 +57,8 @@
                                     <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Publish</span>
                                 @elseif($article->status === 'pending')
                                     <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">Pending</span>
+                                @elseif($article->status === 'draft')
+                                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">Draft</span>
                                 @else
                                     <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Ditolak</span>
                                 @endif
@@ -64,10 +66,11 @@
                             <td class="px-6 py-4">
                                 @if($article->is_guest)
                                     <div class="text-xs font-medium text-gray-900">{{ $article->guest_name }}</div>
-                                    <div class="text-[10px] text-gray-500">Masyarakat</div>
+                                    <div class="text-[10px] text-green-600">{{ $article->guest_whatsapp }}</div>
+                                    <div class="text-[10px] text-gray-500">{{ $article->guest_email }}</div>
                                 @else
                                     <div class="text-xs font-medium text-gray-900">{{ $article->user->name ?? 'Admin' }}</div>
-                                    <div class="text-[10px] text-gray-500">Staff/UPT</div>
+                                    <div class="text-[10px] text-gray-500">{{ ($article->user->role ?? '') === 'admin' ? 'Administrator' : 'Staff UPT' }}</div>
                                 @endif
                             </td>
                             <td class="px-6 py-4">
@@ -78,6 +81,8 @@
                                     class="font-medium text-green-600 hover:underline">Lihat</a>
                                 <a href="{{ route('admin.article.edit', $article) }}"
                                     class="font-medium text-blue-600 hover:underline">Edit</a>
+                                
+
                                 <form action="{{ route('admin.article.destroy', $article) }}" method="POST"
                                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
                                     @csrf

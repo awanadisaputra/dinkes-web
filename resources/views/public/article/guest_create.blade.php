@@ -32,20 +32,30 @@
                     <input type="text" name="address_confirmation" tabindex="-1" autocomplete="off">
                 </div>
                 
+                <div class="mb-4">
+                    <label for="guest_name" class="block mb-2 text-sm font-medium text-gray-900">Nama Lengkap</label>
+                    <input type="text" id="guest_name" name="guest_name" value="{{ old('guest_name') }}" required
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @error('guest_name')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="guest_name" class="block mb-2 text-sm font-medium text-gray-900">Nama Lengkap</label>
-                        <input type="text" id="guest_name" name="guest_name" value="{{ old('guest_name') }}" required
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                        @error('guest_name')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
                     <div>
                         <label for="guest_email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
                         <input type="email" id="guest_email" name="guest_email" value="{{ old('guest_email') }}" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         @error('guest_email')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="guest_whatsapp" class="block mb-2 text-sm font-medium text-gray-900">No. WhatsApp</label>
+                        <input type="text" id="guest_whatsapp" name="guest_whatsapp" value="{{ old('guest_whatsapp') }}" required
+                            placeholder="08xxxxxxxxxx"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @error('guest_whatsapp')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
