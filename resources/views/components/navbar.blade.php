@@ -1,8 +1,11 @@
 <nav class="bg-neutral-primary fixed w-full z-20 top-0 start-0 border-default">
     <div class="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Logo" />
-            <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">Dinas Kesehatan</span>
+            <img src="{{ asset('storage/images/logo-dinkes.webp') }}" class="h-10" alt="Logo" />
+            <div class="flex flex-col">
+                <span class="text-lg md:text-xl text-heading font-bold whitespace-nowrap leading-tight">Dinas Kesehatan</span>
+                <span class="text-xs md:text-sm text-heading font-medium whitespace-nowrap leading-tight">Kota Kediri</span>
+            </div>
         </a>
         <button data-collapse-toggle="navbar-dropdown" type="button"
             class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"

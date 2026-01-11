@@ -66,10 +66,10 @@
                     <button data-modal-target="createModal" data-modal-toggle="createModal"
                         class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none"
                         type="button">
-                        Tambah Menu
+                        Tambah User
                     </button>
 
-                    <!-- modal tambah menu -->
+                    <!-- modal tambah user -->
                     <div id="createModal" tabindex="-1" aria-hidden="true"
                         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                         <div class="relative p-4 w-full max-w-md max-h-full">
@@ -136,22 +136,15 @@
                                         <div>
                                             <label for="no_telp" class="block mb-2.5 text-sm font-medium text-heading">No.
                                                 Telepon</label>
-                                            <input type="number" id="no_telp" aria-describedby="helper-text-explanation"
+                                            <input type="number" id="no_telp" name="no_telp"
                                                 class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
-                                                placeholder="90210" required />
-                                        </div>
-                                        <div>
-                                            <label for="password"
-                                                class="block mb-2.5 text-sm font-medium text-heading">Password</label>
-                                            <input type="password" name="password" id="password"
-                                                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                                                placeholder="Password" required="">
+                                                placeholder="0812xxxx" required />
                                         </div>
                                     </div>
                                     <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
                                         <button type="submit"
                                             class="inline-flex items-center  text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                                            Tambah menu
+                                            Tambah User
                                         </button>
                                         <button data-modal-hide="createModal" type="button"
                                             class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Batal</button>

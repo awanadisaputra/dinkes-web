@@ -9,6 +9,7 @@ class Feedback extends Model
     protected $table = 'feedbacks';
 
     protected $fillable = [
+        'is_anonymous',
         'name',
         'email',
         'whatsapp',
@@ -19,6 +20,7 @@ class Feedback extends Model
 
     protected $casts = [
         'is_read' => 'boolean',
+        'is_anonymous' => 'boolean',
     ];
     //
 }

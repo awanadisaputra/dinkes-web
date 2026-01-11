@@ -64,8 +64,14 @@ class ArticleController extends Controller
      */
     public function show(Article $article, Request $request)
     {
-        if ($article->status !== 'published' && !Auth::check()) {
-            abort(404);
+        if ($article->status !== 'published') {
+            if (!Auth::check()) {
+                abort(404);
+            }
+
+            if (Auth::user()->role !== 'admin' && $article->user_id !== Auth::id()) {
+                abort(404);
+            }
         }
 
         // Increment views
@@ -237,11 +243,11 @@ class ArticleController extends Controller
         if ($article->status === 'published') {
             $article->update(['status' => 'draft']);
             $message = 'Artikel berhasil di-unpublish (Draft)';
-        } elseif ($article->status === 'draft') {
+        } elseif ($article->status === 'draft' || $article->status === 'rejected') {
             $article->update(['status' => 'published']);
             $message = 'Artikel berhasil dipublish';
         } else {
-             return redirect()->back()->with('error', 'Status artikel tidak dapat diubah (Pending/Rejected)');
+             return redirect()->back()->with('error', 'Status artikel tidak dapat diubah (Pending)');
         }
 
         return redirect()->back()->with('success', $message);

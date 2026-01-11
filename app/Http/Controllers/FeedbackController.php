@@ -17,15 +17,27 @@ class FeedbackController extends Controller
             return redirect()->back();
         }
 
-        $validatedStats = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'whatsapp' => 'nullable|string|max:20',
+        $rules = [
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
-        ]);
+            'whatsapp' => 'nullable|string|max:20',
+        ];
 
-        Feedback::create($validatedStats);
+        if (!$request->has('is_anonymous')) {
+            $rules['name'] = 'required|string|max:255';
+            $rules['email'] = 'required|email|max:255';
+        }
+
+        $validatedData = $request->validate($rules);
+
+        $validatedData['is_anonymous'] = $request->has('is_anonymous');
+        
+        if ($validatedData['is_anonymous']) {
+            $validatedData['name'] = 'Anonim'; // Or leave null if preferred, but 'Anonim' is display-friendly
+             // We can leave email null
+        }
+
+        Feedback::create($validatedData);
 
         return redirect()->back()->with('success', 'Terima kasih atas masukan Anda!');
     }

@@ -17,7 +17,7 @@
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-3 mb-6 bg-gray-50 border border-gray-200 rounded-lg gap-4">
             <div class="flex items-center gap-3">
                 <h2 class="text-lg font-bold text-gray-800">Edit Artikel</h2>
-                @if(in_array($article->status, ['published', 'draft']))
+                @if(in_array($article->status, ['published', 'draft', 'rejected']))
                     <div class="flex items-center px-2 py-0.5 bg-white border border-gray-200 rounded-full shadow-sm">
                         <div class="w-1.5 h-1.5 rounded-full mr-1.5 {{ $article->status === 'published' ? 'bg-green-500' : 'bg-gray-400' }}"></div>
                         <span class="text-[10px] font-bold uppercase tracking-wider text-gray-600">
@@ -27,7 +27,7 @@
                 @endif
             </div>
 
-            @if(in_array($article->status, ['published', 'draft']))
+            @if(in_array($article->status, ['published', 'draft', 'rejected']))
                 <form action="{{ route('admin.article.toggleStatus', $article) }}" method="POST">
                     @csrf
                     <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 shadow-sm

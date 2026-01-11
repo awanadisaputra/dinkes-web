@@ -104,6 +104,7 @@
                 </a>
             </li>
 
+            @if(auth()->user()->role === 'admin')
             {{-- Kritik & Saran --}}
             <li>
                 <a href="{{ route('admin.feedback.index') }}"
@@ -121,6 +122,7 @@
                     @endif
                 </a>
             </li>
+            @endif
 
             {{-- Pengumuman --}}
             <li>

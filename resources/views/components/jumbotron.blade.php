@@ -1,7 +1,8 @@
 @props(['sliders' => []])
 
 <section
-    class="relative bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-dark/60 bg-blend-multiply overflow-hidden pt-24 pb-32 lg:pt-36 lg:pb-48">
+    style="background-image: url('{{ asset('storage/images/jumbotron.jpeg') }}')"
+    class="relative bg-center bg-cover bg-no-repeat bg-dark/90 bg-blend-multiply overflow-hidden pt-24 pb-32 lg:pt-36 lg:pb-48">
     <div class="px-4 mx-auto max-w-7xl text-center relative z-10">
         <h1 class="mb-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-7xl">
             Solusi Kesehatan Terpadu untuk Masyarakat

@@ -63,6 +63,11 @@
                         </div>
                     @endif
 
+                    <div class="flex items-center mb-6 bg-blue-50/50 p-3 rounded-xl border border-blue-100">
+                        <input id="is_anonymous" type="checkbox" name="is_anonymous" class="w-4 h-4 text-brand bg-gray-100 border-gray-300 rounded focus:ring-brand focus:ring-2">
+                        <label for="is_anonymous" class="ml-2 text-sm font-medium text-heading">Kirim sebagai Anonim (Identitas akan disembunyikan)</label>
+                    </div>
+
                     <div>
                         <label for="name" class="block mb-2 text-sm font-medium text-heading">Nama Lengkap</label>
                         <input type="text" id="name" name="name" required class="bg-neutral-50 border border-default text-heading text-sm rounded-xl focus:ring-brand focus:border-brand block w-full p-3 transition-colors" placeholder="Masukkan nama anda">
@@ -104,3 +109,35 @@
 
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isAnonCheckbox = document.getElementById('is_anonymous');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const whatsappInput = document.getElementById('whatsapp');
+        
+        function toggleInputs() {
+            const isAnon = isAnonCheckbox.checked;
+            
+            [nameInput, emailInput, whatsappInput].forEach(el => {
+                el.disabled = isAnon;
+                if(isAnon) {
+                    el.classList.add('bg-gray-100', 'text-gray-400', 'cursor-not-allowed');
+                    el.classList.remove('bg-neutral-50', 'text-heading');
+                    if(el.hasAttribute('required')) el.removeAttribute('required');
+                    el.value = ''; // Clear value when anonymous
+                } else {
+                    el.classList.remove('bg-gray-100', 'text-gray-400', 'cursor-not-allowed');
+                    el.classList.add('bg-neutral-50', 'text-heading');
+                    if(el.id !== 'whatsapp') el.setAttribute('required', 'required');
+                }
+            });
+        }
+
+        isAnonCheckbox.addEventListener('change', toggleInputs);
+        
+        // Check initial state (e.g. if browser cached checkbox state)
+        toggleInputs();
+    });
+</script>
