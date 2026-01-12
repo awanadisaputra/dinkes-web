@@ -21,7 +21,7 @@ class SliderController extends Controller
         })
             ->orderBy('urutan', 'asc')->paginate(10);
 
-        return view('dashboard.slider', compact('sliders', 'search'));
+        return view('dashboard.slider.index', compact('sliders', 'search'));
     }
 
     /**
@@ -29,7 +29,7 @@ class SliderController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.slider.create');
     }
 
     /**
@@ -40,15 +40,19 @@ class SliderController extends Controller
         $request->validate([
             'title' => 'required',
             'caption' => 'required',
+            'content' => 'nullable',
             'urutan' => 'required|integer',
             'image' => 'required|image'
         ]);
 
         $path = $request->file('image')->store('slider', 'public');
+        $slug = \Illuminate\Support\Str::slug($request->title) . '-' . \Illuminate\Support\Str::random(5);
 
         Slider::create([
             'title' => $request->title,
+            'slug' => $slug,
             'caption' => $request->caption,
+            'content' => $request->content,
             'urutan' => $request->urutan,
             'image' => $path,
         ]);
@@ -59,17 +63,17 @@ class SliderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Slider $slider)
     {
-        //
+        return view('public.slider.show', compact('slider'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Slider $slider)
     {
-        //
+        return view('dashboard.slider.edit', compact('slider'));
     }
 
     /**
@@ -80,11 +84,12 @@ class SliderController extends Controller
         $request->validate([
             'title' => 'required',
             'caption' => 'required',
+            'content' => 'nullable',
             'urutan' => 'required|integer',
             'image' => 'nullable|image'
         ]);
 
-        $data = $request->only('title', 'caption', 'urutan');
+        $data = $request->only('title', 'caption', 'content', 'urutan');
 
         if ($request->hasFile('image')) {
             if (Storage::disk('public')->exists($slider->image)) {
@@ -93,6 +98,12 @@ class SliderController extends Controller
 
             $data['image'] = $request->file('image')->store('slider', 'public');
         }
+        
+        // Update slug if title changed significantly? 
+        // Usually better to keep slug stable to avoid broken links, 
+        // but for sliders maybe it's fine.
+        // Let's keep slug stable for now unless explicitly requested.
+        // Or regenerate if empty (which shouldn't happen).
 
         $slider->update($data);
 

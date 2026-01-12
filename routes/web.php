@@ -30,6 +30,7 @@ Route::get('/pengumuman', [AnnouncementController::class, 'publicIndex'])->name(
 Route::get('/pengumuman/{announcement:slug}', [AnnouncementController::class, 'show'])->name('announcement.show');
 
 Route::get('/page/{page:slug}', [PageController::class, 'show'])->name('page.show');
+Route::get('/slider/{slider:slug}', [SliderController::class, 'show'])->name('public.slider.show');
 
 // feedback
 Route::post('/feedback', [\App\Http\Controllers\FeedbackController::class, 'store'])

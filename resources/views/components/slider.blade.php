@@ -9,10 +9,12 @@
 
                 <!-- Caption Overlay -->
                 <div
-                    class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8 md:p-12 text-left pointer-events-none">
-                    <h3 class="text-white text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
-                        {{ $slider->title }}
-                    </h3>
+                    class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8 md:p-12 text-left pointer-events-auto">
+                    <a href="{{ route('public.slider.show', $slider->slug) }}" class="block w-fit">
+                        <h3 class="text-white text-2xl md:text-3xl lg:text-4xl font-bold mb-2 hover:underline">
+                            {{ $slider->title }}
+                        </h3>
+                    </a>
                     <p class="text-gray-200 text-sm md:text-base lg:text-lg max-w-2xl">
                         {{ $slider->caption }}
                     </p>
