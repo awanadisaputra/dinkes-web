@@ -158,7 +158,11 @@
                     insertToEditor(url);
                 } else {
                     console.error('Upload failed');
-                    alert('Gagal mengupload file');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Gagal mengupload file'
+                    });
                 }
             };
             xhr.send(fd);

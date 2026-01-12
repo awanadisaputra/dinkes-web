@@ -38,7 +38,7 @@
                             </td>
                             <td class="py-4 px-6 flex gap-2">
                                 <a href="{{ route('admin.feedback.show', $feedback) }}" class="font-medium text-blue-600 hover:underline">Lihat</a>
-                                <form action="{{ route('admin.feedback.destroy', $feedback) }}" method="POST" onsubmit="return confirm('Hapus pesan ini?');">
+                                <form action="{{ route('admin.feedback.destroy', $feedback) }}" method="POST" class="delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="font-medium text-red-600 hover:underline">Hapus</button>

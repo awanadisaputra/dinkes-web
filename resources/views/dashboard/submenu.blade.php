@@ -6,37 +6,7 @@
 
 @section('content')
     <div class="min-h-screen">
-        @if(session('success'))
-            <div id="toast-success"
-                class="fixed bottom-5 right-5 flex items-center w-full max-w-sm p-4 text-body bg-neutral-primary-soft rounded-base shadow-xs border border-default"
-                role="alert">
 
-                <div class="inline-flex items-center justify-center shrink-0 w-7 h-7 text-fg-success bg-success-soft rounded">
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 11.917 9.724 16.5 19 7.5" />
-                    </svg>
-                    <span class="sr-only">Check icon</span>
-                </div>
-
-                <div class="ms-3 text-sm font-normal">
-                    {{ session('success') }}
-                </div>
-
-                <button type="button"
-                    class="ms-auto flex items-center justify-center text-body hover:text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded text-sm h-8 w-8 focus:outline-none"
-                    data-dismiss-target="#toast-success" aria-label="Close">
-                    <span class="sr-only">Close</span>
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18 17.94 6M18 18 6.06 6" />
-                    </svg>
-                </button>
-
-            </div>
-        @endif
 
         <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
             <div class="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 p-4">
@@ -326,7 +296,7 @@
                                                         class="font-semibold">{{ $submenu->nama_submenu }}</span>?
                                                 </h3>
                                                 <form action="{{ route('admin.submenu.destroy', $submenu->id) }}" method="POST"
-                                                    class="inline">
+                                                    class="inline delete-form">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"

@@ -13,12 +13,7 @@
             </a>
         </div>
 
-        @if (session('success'))
-            <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
-                role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
+
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500">
@@ -84,7 +79,7 @@
                                 
 
                                 <form action="{{ route('admin.article.destroy', $article) }}" method="POST"
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
+                                    class="delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="font-medium text-red-600 hover:underline">Hapus</button>

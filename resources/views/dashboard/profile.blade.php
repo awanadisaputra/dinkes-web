@@ -16,14 +16,7 @@
         </div>
 
         {{-- Notifikasi Sukses --}}
-        @if(session('success'))
-            <div id="toast-success"
-                class="mt-4 w-full p-4 bg-green-100 border border-green-400 rounded-lg shadow">
-                <div class="text-sm font-normal text-green-800">
-                    {{ session('success') }}
-                </div>
-            </div>
-        @endif
+
 
         {{-- Form --}}
         <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
